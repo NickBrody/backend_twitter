@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Header, HTTPException
 from starlette.middleware.cors import CORSMiddleware
 from starlette.requests import Request
 from starlette.responses import HTMLResponse
@@ -28,12 +28,27 @@ async def index(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app_api.get("/users/me")
-async def read_user_me():
+async def read_user_me(api_key: str = "test"):
+    if api_key != 'test':
+        raise HTTPException(status_code=400, detail="Invalid API Key")
+
     return {
         "result": "true",
         "user": {
             "id": 1,
-            "name": "name",
-            "followers": [], "following": []
+            "name": "str",
+            "followers": [
+                {
+                    "id": 2,
+                    "name": "str"
+                }
+            ],
+            "following": [
+                {
+                    "id": 3,
+                    "name": "str"
+                }
+            ]
         }
     }
+
