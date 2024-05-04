@@ -5,6 +5,7 @@ from sqlalchemy.dialects.postgresql import ARRAY, JSON
 
 from database import Base
 
+
 class Tweet(Base):
     __tablename__ = 'tweets'
 
